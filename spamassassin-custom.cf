@@ -28,6 +28,23 @@ describe URI_PHISHING      Url match phishing in feed
 score URI_PHISHING 0  2.4   0  2.5
 endif
 
+#--------------------------------------------------
+# Regra basica para barrar ataques xls|xlsx|doc|docx
+#--------------------------------------------------
+header      __SA_VIRUS_MACROS Subject =~ /\b(Fwd:|Re:|RE:|FWD:)  [A-Za-z0-9_-]+\@/i
+mimeheader  __MIME_EXCEL_WORD  Content-Type =~ /\.(xls|xlsx|doc|docx)\b/i
+meta        SA_MACROS_OFFICE ( __SA_VIRUS_MACROS && __MIME_EXCEL_WORD )
+score       SA_MACROS_OFFICE 10
+describe    SA_MACROS_OFFICE Phishing Office com macros maciliciosos
+
+
+#--------------------------------------------------
+# Regras basica para barrar ataque de que vem via firebase pdf
+#--------------------------------------------------
+uri LOCAL_URI_FIREBASE 	/*\.app.goo\.GL\/
+score LOCAL_URI_FIREBASE	10
+
+
 # Deny e-mail with these contents
 # Add content to file: /etc/mail/spamassassin/custom.cf
 
@@ -71,21 +88,25 @@ body	 LOCAL_RULE21	  /.*Peça o novo Cartão Santander SX.*/
 score	 LOCAL_RULE21	  10.0
 body	 LOCAL_RULE22	  /.*Cartão Santander SX.*/
 score	 LOCAL_RULE22	  10.0
-body	LOCAL_RULE23	  /.*Cartão de Crédito SX do Santander.*/
-score	LOCAL_RULE23	  10.0
-body    PHISHING_BODY       /.*conta de e-mail foi infectada|.*clique aqui para atualizar|.*excedeu seu limite de|.*webmail apagando assim toda conta|.*Para atualizar sua conta de e-mail clique aqui|.*Sua Conta acaba de ser acessada|.*exigidos actualizar suas informa|.*proteja e aumente o tamanho da sua caixa de correio|.*Clique aqui e Descubra|.*Clique Aqui e Adquira|.*Aproveite o novo momento com a nova interface de webmail|.*Hi, victim|.*Para actualizar a sua conta de webmail|.*Atualize os dados da sua conta para voltar a assistir e evite|.*bloqueio do seu acesso para sua seguran|.*Por favor, proteja e aumente o tamanho da sua caixa de correio|.*anual do webmail|.*revalidar sua caixa de correio|.*sua caixa postal vai ser desati|.*queremos lembrar que a conta vinculada ao seu dispositivo de seguran|.*recusam a atualizar sua conta|.*para a conta de webmail ativo|.*entrar em sua conta e atualizar sua conta|.*Sua senha da caixa de correio|.*Eu sou um hacker que tem acesso ao seu sistema operacional|.*Depois disso, fiz um backup completo do seu disco|.*webmail a atualizarem imediatamente sua conta de webmail|ATIVA.*O DO CORREIO ELETR.*NICO|Uma tentativa incomum de login|.*excedeu o limite de armazenamento da caixa de correio|.*Seu armazenamento de caixa de correio atingiu seu limite de cota.*/i
-score    PHISHING_BODY 10
-body LOCAL_RULE24 /.*Escolha abaixo a melhor forma de consultar o protesto/
-score LOCAL_RULE24 10.0
-body	LOCAL_RULE31	/.*Por motivos de seguran|.*da nossa plataforma do Webmail|.* ocasionar a perda de suas informa|.*para que possamos sempre melhorar a nossa seguran.*/
-score	LOCAL_RULE31	10.0
-body	LOCAL_RULE32	/.*cadastramento do internet banking.*/
-score	LOCAL_RULE32	10.0
-body	LOCAL_RULE33	/.*Seu dispositivo está infectado e hackeado.*/
-score	LOCAL_RULE33	40.0
-body	LOCAL_RULE34	/.*Seu CNPJ se encontra suspenso.*/
-score	LOCAL_RULE34	10.0
-body	LOCAL_RULE35	/.*Você já possui uma pontuação decorrente|.*do vínculo deste e-mail ao BB|.*, porém para resgatar seus pontos|.* e aproveitar os benefícios do programa será necessário validar sua adesão e criar um login para acesso ao portal Ponto pra sua Empresa.*./
-score	LOCAL_RULE35	10.0
-body	LOCAL_RULE36	/.*um problema com os dados de pagamento atuais*./
-score	LOCAL_RULE36	10.0
+body	 LOCAL_RULE23	  /.*Cartão de Crédito SX do Santander.*/
+score	 LOCAL_RULE23	  10.0
+body     PHISHING_BODY    /.*conta de e-mail foi infectada|.*clique aqui para atualizar|.*excedeu seu limite de|.*webmail apagando assim toda conta|.*Para atualizar sua conta de e-mail clique aqui|.*Sua Conta acaba de ser acessada|.*exigidos actualizar suas informa|.*proteja e aumente o tamanho da sua caixa de correio|.*Clique aqui e Descubra|.*Clique Aqui e Adquira|.*Aproveite o novo momento com a nova interface de webmail|.*Hi, victim|.*Para actualizar a sua conta de webmail|.*Atualize os dados da sua conta para voltar a assistir e evite|.*bloqueio do seu acesso para sua seguran|.*Por favor, proteja e aumente o tamanho da sua caixa de correio|.*anual do webmail|.*revalidar sua caixa de correio|.*sua caixa postal vai ser desati|.*queremos lembrar que a conta vinculada ao seu dispositivo de seguran|.*recusam a atualizar sua conta|.*para a conta de webmail ativo|.*entrar em sua conta e atualizar sua conta|.*Sua senha da caixa de correio|.*Eu sou um hacker que tem acesso ao seu sistema operacional|.*Depois disso, fiz um backup completo do seu disco|.*webmail a atualizarem imediatamente sua conta de webmail|ATIVA.*O DO CORREIO ELETR.*NICO|Uma tentativa incomum de login|.*excedeu o limite de armazenamento da caixa de correio|.*Seu armazenamento de caixa de correio atingiu seu limite de cota.*/i
+score    PHISHING_BODY    10
+body     LOCAL_RULE24     /.*Escolha abaixo a melhor forma de consultar o protesto/
+score    LOCAL_RULE24     10.0
+body	 LOCAL_RULE31	  /.*Por motivos de seguran|.*da nossa plataforma do Webmail|.* ocasionar a perda de suas informa|.*para que possamos sempre melhorar a nossa seguran.*/
+score	 LOCAL_RULE31	  10.0
+body	 LOCAL_RULE32	  /.*cadastramento do internet banking.*/
+score	 LOCAL_RULE32	  10.0
+body	 LOCAL_RULE33	  /.*Seu dispositivo está infectado e hackeado.*/
+score	 LOCAL_RULE33	  40.0
+body	 LOCAL_RULE34	  /.*Seu CNPJ se encontra suspenso.*/
+score	 LOCAL_RULE34	  10.0
+body	 LOCAL_RULE35	  /.*Você já possui uma pontuação decorrente|.*do vínculo deste e-mail ao BB|.*, porém para resgatar seus pontos|.* e aproveitar os benefícios do programa será necessário validar sua adesão e criar um login para acesso ao portal Ponto pra sua Empresa.*./
+score	 LOCAL_RULE35	  10.0
+body	 LOCAL_RULE36	  /.*um problema com os dados de pagamento atuais*./
+score	 LOCAL_RULE36	  10.0
+body     LOCAL_RULE37     /.*Vinicius Singillo, sou Consultor Comercial da Embracon*./
+score    LOCAL_RULE37     10.0
+body     LOCAL_RULE38     /.*segue,  meu currículo , para avaliaçao|.* grata desde já.*/
+score    LOCAL_RULE38     10.0
