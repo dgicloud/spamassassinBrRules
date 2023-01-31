@@ -57,6 +57,21 @@ meta      FROM_GENERIC     (__FROM_GENERICa || __FROM_GENERICb)
 score     FROM_GENERIC     10
 describe  FROM_GENERIC     Spam informativos com endereços genéricos
 
+uri         SA_TLDMYID /\.my.id(?:\/|$)/i
+score       SA_TLDMYID 10
+describe    SA_TLDMYID URL hospedando Malware 108
+
+uri         SA_TLDDOTIN /\.in(?:\/|$)/i
+score       SA_TLDDOTIN 10
+describe    SA_TLDDOTIN URL hospedando Malware 109
+
+body        SA_TRASH242 /Aqui encontre os resumos mencionados anteriormente|Arquivo senha PG1/i
+score       SA_TRASH242 10
+describe    SA_TRASH242 Spam Trash geral 242
+
+header      SA_TRASH243 Subject =~ /\bProottocollo de Investig|Rellaat/i
+score       SA_TRASH243 10
+describe    SA_TRASH243 Spam Trash geral 243
 
 
 # Deny e-mail with these contents
