@@ -124,9 +124,9 @@ body     LOCAL_RULE37     /.*Vinicius Singillo, sou Consultor Comercial da Embra
 score    LOCAL_RULE37     10.0
 body     LOCAL_RULE38     /.*segue,  meu currículo , para avaliaçao|.* grata desde já.*/
 score    LOCAL_RULE38     10.0
-body    LOCAL_RULE39    /.*Permission to comment at Ariel's photos is granted*./
-score   LOCAL_RULE39    10.0
-body    LOCAL_RULE40    /.*Private video from use Arya in your inbox*./
-score   LOCAL_RULE40    10.0
-body    LOCAL_RULE41    /.*Now you can look through Caroline's personal pics.|.*Reply to Danna's request to share her hidden pictures with you|.*, Private video from use Nylah in your inbox|.* Accept voice call from Elianna ?.*./
-score   LOCAL_RULE41    10.0
+body     LOCAL_RULE39    /.*Permission to comment at Ariel's photos is granted*./
+score    LOCAL_RULE39    10.0
+body     LOCAL_RULE40    /.*Private video from use Arya in your inbox*./
+score    LOCAL_RULE40    10.0
+body     LOCAL_RULE41    /.*Now you can look through Caroline's personal pics.|.*Reply to Danna's request to share her hidden pictures with you|.*, Private video from use Nylah in your inbox|.* Accept voice call from Elianna ?.*./
+score    LOCAL_RULE41    10.0
