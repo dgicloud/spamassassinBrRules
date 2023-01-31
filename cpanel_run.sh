@@ -9,9 +9,3 @@ cp spamassassin-custom.cf /etc/mail/spamassassin/custom.cf
 
 #reiniciaando o o spamd
 /scripts/restartsrv_spamd 
-
-
-
-
-
-
