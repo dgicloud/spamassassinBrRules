@@ -57,6 +57,37 @@ meta      FROM_GENERIC     (__FROM_GENERICa || __FROM_GENERICb)
 score     FROM_GENERIC     10
 describe  FROM_GENERIC     Spam informativos com endereços genéricos
 
+#-------------------------------------------------
+# Bloquear mensagens com palavras-chave suspeitas
+#-------------------------------------------------
+
+header SUBJECT_FRAUD_KEYWORDS Subject =~ /(Viagra|Cialis|Pills|Medicine|Novos Limites na Sua Conta - AVISO)/
+describe SUBJECT_FRAUD_KEYWORDS E-mail fraudulento detectado (palavras-chave no assunto)
+score SUBJECT_FRAUD_KEYWORDS 10
+
+header FROM_FRAUD_EMAILS From =~ /(@hotmail.com|@gmail.com)/
+describe FROM_FRAUD_EMAILS E-mail fraudulento detectado (remetente comum)
+score FROM_FRAUD_EMAILS 10
+
+#-------------------------------------------------
+# Bloquear mensagens de subdomínios
+#-------------------------------------------------
+
+header FROM_SUBDOMAIN From =~ /.*@.*\.cotemeuplano\.family/
+describe FROM_SUBDOMAIN E-mail de subdomínio bloqueado
+score FROM_SUBDOMAIN 10
+
+header FROM_SUBDOMAIN From =~ /.*@.*\.zena\.family/
+describe FROM_SUBDOMAIN E-mail de subdomínio bloqueado
+score FROM_SUBDOMAIN 10
+
+#-------------------------------------------------
+# Bloquear mensagens de domínios TDLS Suspeitos
+#-------------------------------------------------
+
+header FROM_TDL_FAMILY From =~ /.*@.*\.family/
+describe FROM_TDL_FAMILY E-mail de TDL "family" bloqueado
+score FROM_TDL_FAMILY 10
 
 
 # Deny e-mail with these contents
@@ -130,3 +161,5 @@ body    LOCAL_RULE40    /.*Private video from use Arya in your inbox*./
 score   LOCAL_RULE40    10.0
 body    LOCAL_RULE41    /.*Now you can look through Caroline's personal pics.|.*Reply to Danna's request to share her hidden pictures with you|.*, Private video from use Nylah in your inbox|.* Accept voice call from Elianna ?.*./
 score   LOCAL_RULE41    10.0
+body    LOCAL_RULE42    /.*O Bradesco lhe parabeniza por sua parceria junto ao banco e lhe deseja boas*./
+score   LOCAL_RULE42    10.0
