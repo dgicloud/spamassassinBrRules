@@ -75,11 +75,11 @@ score FROM_FRAUD_EMAILS 10
 
 header FROM_SUBDOMAIN From =~ /.*@.*\.cotemeuplano\.family/
 describe FROM_SUBDOMAIN E-mail de subdomínio bloqueado
-score FROM_SUBDOMAIN 10
+score FROM_SUBDOMAIN 100
 
 header FROM_SUBDOMAIN From =~ /.*@.*\.zena\.family/
 describe FROM_SUBDOMAIN E-mail de subdomínio bloqueado
-score FROM_SUBDOMAIN 10
+score FROM_SUBDOMAIN 100
 
 #-------------------------------------------------
 # Bloquear mensagens de domínios TDLS Suspeitos
@@ -87,7 +87,7 @@ score FROM_SUBDOMAIN 10
 
 header FROM_TDL_FAMILY From =~ /.*@.*\.family/
 describe FROM_TDL_FAMILY E-mail de TDL "family" bloqueado
-score FROM_TDL_FAMILY 10
+score FROM_TDL_FAMILY 100
 
 
 # Deny e-mail with these contents
