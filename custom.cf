@@ -42,19 +42,19 @@ describe    SA_MACROS_OFFICE Phishing Office com macros maciliciosos
 # Regras basica para barrar ataque de que vem via firebase pdf
 #--------------------------------------------------
 uri LOCAL_URI_FIREBASE 	/*\.app.goo\.GL\/
-score LOCAL_URI_FIREBASE	10
+score LOCAL_URI_FIREBASE	100.0
 
 
 header    __FROM_RETURN1  From =~ /(root|ubuntu|www-data|www)[\w-+=\.]*\@/i
 header    __FROM_RETURN2  Received =~ /\bfrom\s<?[\w-+=\.]*(root|ubuntu|www-data|www)[\w-+=\.]*\@/i
 meta      FROM_RETURN     (__FROM_RETURN1 || __FROM_RETURN2)
-score     FROM_RETURN     10
+score     FROM_RETURN     100.0
 describe  FROM_RETURN     Remetente de origem sendo contas de serviço
 
 header    __FROM_GENERICa  From =~ /(no-?reply|mkt|marketing|naoresponda|promocoes|promo|newslleter|maladireta)[\w-+=\.]*\@/i
 header    __FROM_GENERICb  Received =~ /\bfrom\s<?[\w-+=\.]*(no-?reply|mkt|marketing|naoresponda|promocoes|promo|newslleter|maladireta)[\w-+=\.]*\@/i
 meta      FROM_GENERIC     (__FROM_GENERICa || __FROM_GENERICb)
-score     FROM_GENERIC     10
+score     FROM_GENERIC     100.0
 describe  FROM_GENERIC     Spam informativos com endereços genéricos
 
 #-------------------------------------------------
@@ -63,11 +63,20 @@ describe  FROM_GENERIC     Spam informativos com endereços genéricos
 
 header SUBJECT_FRAUD_KEYWORDS Subject =~ /(Viagra|Cialis|Pills|Medicine|Novos Limites na Sua Conta - AVISO)/
 describe SUBJECT_FRAUD_KEYWORDS E-mail fraudulento detectado (palavras-chave no assunto)
-score SUBJECT_FRAUD_KEYWORDS 10
+score SUBJECT_FRAUD_KEYWORDS 100.0
 
-header FROM_FRAUD_EMAILS From =~ /(@hotmail.com|@gmail.com)/
-describe FROM_FRAUD_EMAILS E-mail fraudulento detectado (remetente comum)
-score FROM_FRAUD_EMAILS 10
+header BLOCKED_SUBJECT Subject =~ /Suporte Alerta de Bloqueio, terça-feira,/
+describe BLOCKED_SUBJECT E-mail bloqueado com o assunto "Suporte Alerta de Bloqueio, terça-feira, 10 de janeiro de 2023 10:05:07"
+score BLOCKED_SUBJECT 100.0
+
+header LOCAL_COMPRA_IMOVEIS Subject =~ /\bNossa empresa disponibiliza Recursos para compra de imóveis\b/i
+score LOCAL_COMPRA_IMOVEIS 100.0
+describe LOCAL_COMPRA_IMOVEIS E-mails com a palavra-chave "Nossa empresa disponibiliza Recursos para compra de imóveis" bloqueados.
+
+header LOCAL_SOU_CONSULTOR Subject =~ /\bsou consultor financeiro.\b/i
+score LOCAL_SOU_CONSULTOR 100.0
+describe LOCAL_SOU_CONSULTOR E-mails com a palavra-chave "sou consultor financeiro." bloqueados.
+
 
 #-------------------------------------------------
 # Bloquear mensagens de subdomínios
@@ -75,11 +84,16 @@ score FROM_FRAUD_EMAILS 10
 
 header FROM_SUBDOMAIN From =~ /.*@.*\.cotemeuplano\.family/
 describe FROM_SUBDOMAIN E-mail de subdomínio bloqueado
-score FROM_SUBDOMAIN 100
+score FROM_SUBDOMAIN 100.0
 
 header FROM_SUBDOMAIN From =~ /.*@.*\.zena\.family/
 describe FROM_SUBDOMAIN E-mail de subdomínio bloqueado
-score FROM_SUBDOMAIN 100
+score FROM_SUBDOMAIN 100.0
+
+header LOCAL_PD2_ONPDR From =~ /@pd2\.onpdr\.com$/i
+score LOCAL_PD2_ONPDR 100.0
+describe LOCAL_PD2_ONPDR E-mails do subdomínio pd2.onpdr.com bloqueados.
+
 
 #-------------------------------------------------
 # Bloquear mensagens de domínios TDLS Suspeitos
@@ -87,8 +101,24 @@ score FROM_SUBDOMAIN 100
 
 header FROM_TDL_FAMILY From =~ /.*@.*\.family/
 describe FROM_TDL_FAMILY E-mail de TDL "family" bloqueado
-score FROM_TDL_FAMILY 100
+score FROM_TDL_FAMILY 100.0
 
+
+#-------------------------------------------------
+# Bloquear mensagens de dominios
+#-------------------------------------------------
+
+header LOCAL_ARUBANETWORKS From =~ /@arubanetworks\.com$/i
+score LOCAL_ARUBANETWORKS 100.0
+describe LOCAL_ARUBANETWORKS E-mails do domínio arubanetworks.com bloqueados.
+
+header LOCAL_ONPDR From =~ /@onpdr\.com$/i
+score LOCAL_ONPDR 100.0
+describe LOCAL_ONPDR E-mails do domínio onpdr.com bloqueados.
+
+header LOCAL_MCDLV From =~ /@mcdlv\.net$/i
+score LOCAL_MCDLV 100.0
+describe LOCAL_MCDLV E-mails do domínio mcdlv.net bloqueados.
 
 # Deny e-mail with these contents
 # Add content to file: /etc/mail/spamassassin/custom.cf
@@ -155,11 +185,13 @@ body     LOCAL_RULE37     /.*Vinicius Singillo, sou Consultor Comercial da Embra
 score    LOCAL_RULE37     10.0
 body     LOCAL_RULE38     /.*segue,  meu currículo , para avaliaçao|.* grata desde já.*/
 score    LOCAL_RULE38     10.0
-body    LOCAL_RULE39    /.*Permission to comment at Ariel's photos is granted*./
-score   LOCAL_RULE39    10.0
-body    LOCAL_RULE40    /.*Private video from use Arya in your inbox*./
-score   LOCAL_RULE40    10.0
-body    LOCAL_RULE41    /.*Now you can look through Caroline's personal pics.|.*Reply to Danna's request to share her hidden pictures with you|.*, Private video from use Nylah in your inbox|.* Accept voice call from Elianna ?.*./
-score   LOCAL_RULE41    10.0
-body    LOCAL_RULE42    /.*O Bradesco lhe parabeniza por sua parceria junto ao banco e lhe deseja boas*./
-score   LOCAL_RULE42    10.0
+body     LOCAL_RULE39     /.*Permission to comment at Ariel's photos is granted*./
+score    LOCAL_RULE39     10.0
+body     LOCAL_RULE40     /.*Private video from use Arya in your inbox*./
+score    LOCAL_RULE40     10.0
+body     LOCAL_RULE41     /.*Now you can look through Caroline's personal pics.|.*Reply to Danna's request to share her hidden pictures with you|.*, Private video from use Nylah in your inbox|.* Accept voice call from Elianna ?.*./
+score    LOCAL_RULE41     10.0
+body     LOCAL_RULE42     /.*O Bradesco lhe parabeniza por sua parceria junto ao banco e lhe deseja boas*./
+score    LOCAL_RULE42     10.0
+body     LOCAL_RULE43     /.*Sua caixa de Email excedeu o limite de armazenamento!*./
+score    LOCAL_RULE43     100.0
