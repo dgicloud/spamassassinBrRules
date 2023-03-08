@@ -28,6 +28,18 @@ describe URI_PHISHING      Url match phishing in feed
 score URI_PHISHING 0  2.4   0  2.5
 endif
 
+uri         SA_SAFELINKSOWA /\.safelinks.protection.outlook.com(?:\/|$)/i
+score       SA_SAFELINKSOWA 40
+describe    SA_SAFELINKSOWA URL hospedando Malware 146
+
+uri         SA_DOWNLARXAMAIR /\.dowlarxamair.online(?:\/|$)/i
+score       SA_DOWNLARXAMAIR 80
+describe    SA_DOWNLARXAMAIR URL hospedando Malware 147
+
+uri         SA_VISIONSTARTHTPP /\.visionstarthtpp.online(?:\/|$)/i
+score       SA_VISIONSTARTHTPP 80
+describe    SA_VISIONSTARTHTPP URL hospedando Malware 148
+
 #--------------------------------------------------
 # Regra basica para barrar ataques xls|xlsx|doc|docx
 #--------------------------------------------------
