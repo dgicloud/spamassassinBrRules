@@ -49,7 +49,6 @@ meta        SA_MACROS_OFFICE ( __SA_VIRUS_MACROS && __MIME_EXCEL_WORD )
 score       SA_MACROS_OFFICE 10
 describe    SA_MACROS_OFFICE Phishing Office com macros maciliciosos
 
-
 #--------------------------------------------------
 # Regras basica para barrar ataque de que vem via firebase pdf
 #--------------------------------------------------
@@ -66,7 +65,7 @@ describe  FROM_RETURN     Remetente de origem sendo contas de serviço
 header    __FROM_GENERICa  From =~ /(no-?reply|mkt|marketing|naoresponda|promocoes|promo|newslleter|maladireta)[\w-+=\.]*\@/i
 header    __FROM_GENERICb  Received =~ /\bfrom\s<?[\w-+=\.]*(no-?reply|mkt|marketing|naoresponda|promocoes|promo|newslleter|maladireta)[\w-+=\.]*\@/i
 meta      FROM_GENERIC     (__FROM_GENERICa || __FROM_GENERICb)
-score     FROM_GENERIC     100.0
+score     FROM_GENERIC     80
 describe  FROM_GENERIC     Spam informativos com endereços genéricos
 
 #-------------------------------------------------
