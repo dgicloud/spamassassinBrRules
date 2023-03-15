@@ -206,3 +206,5 @@ body     LOCAL_RULE42     /.*O Bradesco lhe parabeniza por sua parceria junto ao
 score    LOCAL_RULE42     10.0
 body     LOCAL_RULE43     /.*Sua caixa de Email excedeu o limite de armazenamento!*./
 score    LOCAL_RULE43     100.0
+body     LOCAL_RULE44     /https?:\/\/.*\.compute\.amazonaws\.com/i
+score    LOCAL_RULE44     100.0
